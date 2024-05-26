@@ -1,3 +1,7 @@
+'use client'
+
+import Spinner from "@/components/Spinner";
+
 import {
     Table,
     TableBody,
@@ -12,6 +16,8 @@ import { Pen, Trash } from "lucide-react"
 import { Button } from "./ui/button"
 import { ITodo } from "@/interfaces"
 import { Badge } from "./ui/badge"
+import { deleteTodoAction } from "@/actions/todo.actions"
+import { useState } from "react"
   
   const invoices = [
     {
@@ -59,6 +65,7 @@ import { Badge } from "./ui/badge"
   ]
   
   export default function TodosTable({todos}: {todos: ITodo[]}) {
+    const [loading, setLoading] = useState(false);
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
@@ -78,7 +85,13 @@ import { Badge } from "./ui/badge"
               <TableCell>{todo.completed ? <Badge>Completed</Badge> : <Badge variant={'secondary'}>Uncompleted</Badge>}</TableCell>
               <TableCell className="flex items-center justify-end space-x-2">
                 <Button variant="secondary" size={'icon'}><Pen size={16}/></Button>
-                <Button variant="destructive" size={'icon'}><Trash size={16}/></Button>
+                <Button variant="destructive" size={'icon'} onClick={async () => {
+                  setLoading(true);
+                  await deleteTodoAction({id: todo.id});
+                  setLoading(false);
+                }}>
+                  {loading? <Spinner />: <Trash size={16}/>}
+                </Button>
               </TableCell>
             </TableRow>
           ))}
