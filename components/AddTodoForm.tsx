@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -33,6 +33,8 @@ import { title } from "process";
 import { Checkbox } from "./ui/checkbox";
 
 const AddTodoForm = () => {
+  const [open, setOpen] = useState(false);
+
   const defaultValues: Partial<TodoFormValues> = {
     title: "",
     body: "",
@@ -46,13 +48,14 @@ const AddTodoForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit = async (data: TodoFormValues) => {
-    await createTodoAction({ title: data.title, body: data.body, completed: data.completed });
+  const onSubmit = async ({title, body, completed}: TodoFormValues) => {
+    await createTodoAction({ title, body, completed });
+    setOpen(false);
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild className="ml-auto">
         <Button>
           <Plus size={14} className="mr-1" />
           New Todo
@@ -60,10 +63,7 @@ const AddTodoForm = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </DialogDescription>
+          <DialogTitle>Add New Todo</DialogTitle>
         </DialogHeader>
         <div className="py-4">
           <Form {...form}>
@@ -77,11 +77,6 @@ const AddTodoForm = () => {
                     <FormControl>
                       <Input placeholder="Title " {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This is your public display name. It can be your real name
-                      or a pseudonym. You can only change this once every 30
-                      days.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -101,8 +96,7 @@ const AddTodoForm = () => {
                       />
                     </FormControl>
                     <FormDescription>
-                      You can <span>@mention</span> other users and
-                      organizations to link to them.
+                      You can add a description to your todo.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -117,11 +111,9 @@ const AddTodoForm = () => {
                     <FormControl>
                       <Checkbox checked={field.value} onCheckedChange={field.onChange} {...field} />
                     </FormControl>
-                    <FormLabel>Completed</FormLabel>
+                    <FormLabel className="ml-1">Completed</FormLabel>
                     <FormDescription>
-                      This is your public display name. It can be your real name
-                      or a pseudonym. You can only change this once every 30
-                      days.
+                      Mark as completed if you have finished the task.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
