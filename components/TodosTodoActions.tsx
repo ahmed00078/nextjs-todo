@@ -5,21 +5,21 @@ import { Button } from "./ui/button";
 import { Pen, Trash } from "lucide-react";
 import Spinner from "./Spinner";
 import { deleteTodoAction } from "@/actions/todo.actions";
+import EditTodoForm from "./EditTodoForm";
+import { ITodo } from "@/interfaces";
 
-const TodosTableActions = ({id}: {id: string}) => {
+const TodosTableActions = ({todo}: {todo: ITodo}) => {
     const [loading, setLoading] = useState(false);
 
   return (
     <>
-      <Button variant="secondary" size={"icon"}>
-        <Pen size={16} />
-      </Button>
+      <EditTodoForm todo={ todo }/>
       <Button
         variant="destructive"
         size={"icon"}
         onClick={async () => {
           setLoading(true);
-          await deleteTodoAction({ id });
+          await deleteTodoAction({ id: todo?.id as string});
           setLoading(false);
         }}
       >
