@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createTodoAction, getTodoAction } from "@/actions/todo.actions";
+import { createTodoAction, getUserTodoAction } from "@/actions/todo.actions";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
@@ -32,7 +32,7 @@ import { TodoFormValues, todoFormSchema } from "@/schema";
 import { title } from "process";
 import { Checkbox } from "./ui/checkbox";
 
-const AddTodoForm = () => {
+const AddTodoForm = ({userId}: {userId: string | null}) => {
   const [open, setOpen] = useState(false);
 
   const defaultValues: Partial<TodoFormValues> = {
@@ -49,7 +49,7 @@ const AddTodoForm = () => {
   });
 
   const onSubmit = async ({title, body, completed}: TodoFormValues) => {
-    await createTodoAction({ title, body, completed });
+    await createTodoAction({ title, body, completed, userId: userId as string});
     setOpen(false);
   };
 
