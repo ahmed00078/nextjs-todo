@@ -22,7 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createTodoAction, getTodoAction, updateTodoAction } from "@/actions/todo.actions";
+import { createTodoAction, getUserTodoAction, updateTodoAction } from "@/actions/todo.actions";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Pen, Plus } from "lucide-react";
