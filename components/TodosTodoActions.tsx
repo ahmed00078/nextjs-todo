@@ -19,7 +19,7 @@ const TodosTableActions = ({todo}: {todo: ITodo}) => {
         size={"icon"}
         onClick={async () => {
           setLoading(true);
-          await deleteTodoAction({ id: todo?.id });
+          await deleteTodoAction({ id: todo?.id as string});
           setLoading(false);
         }}
       >
