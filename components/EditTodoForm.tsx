@@ -109,7 +109,7 @@ const EditTodoForm = ({todo}: {todo: ITodo}) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} {...field} />
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                     <FormLabel className="ml-1 fs-1 fs-md-3 fs-lg-5">Completed</FormLabel>
                     <FormDescription>
