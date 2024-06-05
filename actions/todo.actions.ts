@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 
 export const getUserTodoAction = async ({userId}: {userId: string | null}) => {
+    throw new Error('Not implemented');
     if (!userId) {
         // Si userId est null, retourner un tableau vide
         return [];
