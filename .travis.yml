@@ -1,6 +1,6 @@
 language: node_js
-# node_js:
-#   - "16"
+node_js:
+  - "16"
 
 services:
   - mongodb
@@ -12,27 +12,23 @@ addons:
     packages:
       - mongodb-org-server
 
-before_install:
-  - npm install -g pnpm
-
 install:
-  - pnpm install
+  - npm install
 
 before_script:
-  - pnpm prisma generate
-  - pnpm prisma db push
+  - npx prisma generate
+  - npx prisma db push
 
 script:
-  - pnpm build
+  - npm run build
 
 cache:
   directories:
     - "node_modules"
-    - ".pnpm-store"
 
 deploy:
   provider: script
-  script: pnpm run deploy
+  script: npm run deploy
   on:
     branch: main
 
