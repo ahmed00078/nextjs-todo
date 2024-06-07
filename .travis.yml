@@ -28,11 +28,11 @@ cache:
   directories:
     - "node_modules"
 
-deploy:
-  provider: script
-  script: npm run deploy
-  on:
-    branch: main
+# deploy:
+#   provider: script
+#   script: npm run deploy
+#   on:
+#     branch: main
 
 env:
   global:
