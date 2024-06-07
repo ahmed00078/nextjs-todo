@@ -1,0 +1,45 @@
+language: node_js
+node_js:
+  - "16"
+
+services:
+  - mongodb
+
+addons:
+  apt:
+    sources:
+      - mongodb-upstart
+    packages:
+      - mongodb-org-server
+
+before_install:
+  - npm install -g pnpm
+
+install:
+  - pnpm install
+
+before_script:
+  - pnpm prisma generate
+  - pnpm prisma db push
+
+script:
+  - pnpm build
+
+cache:
+  directories:
+    - "node_modules"
+    - ".pnpm-store"
+
+deploy:
+  provider: script
+  script: pnpm run deploy
+  on:
+    branch: main
+
+env:
+  global:
+    - DATABASE_URL="mongodb+srv://ahmed78:GP9qOLtDU8fijZW5@nextjs-todo.zhatip1.mongodb.net/todo"
+    - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_YnJhdmUtbGVvcGFyZC0xOS5jbGVyay5hY2NvdW50cy5kZXYk
+    - CLERK_SECRET_KEY=sk_test_ZSrsEAk6BERQhjAPAe6gB2eCNJigwtBw8wX8N5FjLn
+    - NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    - NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
